@@ -2,46 +2,62 @@
 #include <stdlib.h>
 #include <string.h>
 #include <algorithm>
+#include <functional> 
+#include <queue>
+#include <vector>
+
+using namespace std;
+
+priority_queue<int> q;
+priority_queue< int,vector<int>,greater<int> > pq;
 
 int TestCase = 0;
-int numberListCount = 0, number = 0;
-int numberList[10001];
-
-bool compare(int a , int b)
-{
-    return a<b;
-}
+int numberCount =0, number = 0;
 
 int main()
 {
+
     freopen("2696.txt", "rw", stdin);
     setbuf(stdout, NULL);
-    int answer = 0;
-    scanf("%d", &TestCase);
-    for(int i=0; i<TestCase; i++)
-    {
-        scanf("%d", &numberListCount);
-        printf("%d\n",numberListCount/2);
 
-        for( int j =0; j < numberListCount; j++) {
-            scanf("%d", &numberList[j]);
-            //printf("%d ",numberList[j]);
-            if( !(j & 1) ) {
-               // printf("홀수 %d  ",j);
-                std::sort(numberList, numberList + j+1, compare);
-                printf("%d ",numberList[j/2]);  
-                //printf("[j=%d  %d : %d]", j, j/2, numberList[j/2]);     
-   
+    scanf("%d", & TestCase);
+    for( int i = 1; i <=TestCase; i++) {
+        scanf("%d",&numberCount);
+        q = priority_queue<int>();  
+        pq = priority_queue< int, vector <int>, greater<int> >();
+        int cccc = 0;
+
+        printf("%d\n", numberCount/2 + 1);
+        for( int j = 1; j<=numberCount; j++) {
+            scanf("%d", &number); 
+
+            if( j & 1 )  {
+                q.push(number);
             }
-
+            else  {
+                pq.push(number); 
+            } 
+ 
             
+            if( j >= 2) {
+                if( q.top() > pq.top() ) {
+                    int tmp = q.top();
+                    q.pop();
+                    q.push(pq.top());
+                    pq.pop();
+                    pq.push(tmp);
+                }
+            } 
+            if( j & 1) {
+                cccc++;
+                printf("%d ", q.top());
+                if( (cccc%10) == 0 ) printf("\n");
+             }
         }
-        
         printf("\n");
     }
-    // std::sort(numberList, numberList + numberListCount, compare);
-    // for(int i=1; i<numberListCount;i++) printf("%d ", numberList[i]);
+     
+ 
 
-
-    return 1;
+    return 0;
 }
