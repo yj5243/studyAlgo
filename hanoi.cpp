@@ -7,7 +7,7 @@
 
 int A[100010];
 
-long collect(int n, int t)
+static long collect(int n, int t)
 {
     if( n == 0 ) return 0;
     if( A[n] == t) return collect(n-1, t);
@@ -35,7 +35,7 @@ int main()
 
         long from = collect(stoneNumber, 1), to = collect(stoneNumber, 2);
 
-        printf("%ld %ld \n", from, to);
+        //printf("%ld %ld \n", from, to);
         if(from+to == (1L << stoneNumber ) - 1) 
             strcpy(answer,"yes");
         else 
