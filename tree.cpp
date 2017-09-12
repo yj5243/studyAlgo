@@ -34,6 +34,7 @@ int main()
 		for (int AN = 0; AN < treeNumber; AN++) {
 			printf("%d ", AN%minHeight);
 		}
+		minHeight = numeric_limits<int>::max();
 
 	}
 
