@@ -96,8 +96,8 @@ int main()
 			}
 			else if (x == nodeCount + 1)
 			{
-				v0[x] = v0[x-1] + s0[x];
-				v1[x] = v1[x - 1] + s0[x];
+				v0[x] = v0[x- 1] + s0[x];
+				v1[x] = v1[x - 1] + s1[x];
 			}
 			else {
 				v0[x] = min(v1[x - 1] + t1[x - 1], v0[x - 1]) + s0[x];
