@@ -86,43 +86,75 @@ int main()
 
 		 
  
-		for (int x = 1; x <= (nodeCount+1); x++)
+		for (int x = 0; x <= (nodeCount+1); x++)
 		{
-			if (x == 1) {
+			if (x <= 1) {
 				v0[x] = s0[x-1] + s0[x];
 				v1[x] = s1[x - 1] + s1[x];
 
-				//printf("%d %d\n\n\n\n\n", s0[x - 1], s0[x]);
+				printf("v0[%d] = %d :  %d=%d+%d  \n",
+				x, 
+				v0[x],
+				s0[x-1] + s0[x], 
+				s0[x-1], s0[x] );
+
+				printf("v1[%d] = %d :  %d=%d+%d \n",
+				x, 
+				v1[x], 
+				s1[x-1] + s1[x],   
+				s1[x-1],s1[x]);
 			}
 			else if (x == nodeCount + 1)
 			{
 				v0[x] = v0[x- 1] + s0[x];
 				v1[x] = v1[x - 1] + s1[x];
+
+				printf("v0[%d] = %d :  %d=%d+%d  \n",
+				x, 
+				v0[x],
+				v0[x - 1] + s0[x], 
+				v0[x - 1], s0[x] );
+
+				printf("v1[%d] = %d :  %d=%d+%d \n",
+				x, 
+				v1[x], 
+				v1[x - 1] + s1[x],   
+				v1[x - 1],s1[x]);
+
+
 			}
 			else {
 				v0[x] = min(v1[x - 1] + t1[x - 1], v0[x - 1]) + s0[x];
 				v1[x] = min(v0[x - 1] + t0[x - 1], v1[x - 1]) + s1[x];
+
+
+
+				printf("v0[%d] = %d :  %d=%d+%d , %d=%d+%d+%d\n",
+				x, 
+				v0[x],
+				v0[x - 1] + s0[x], 
+				v0[x - 1], s0[x],
+				v1[x - 1] + t1[x - 1] + s0[x],
+				v1[x - 1], t1[x - 1], s0[x]);
+
+				printf("v1[%d] = %d :  %d=%d+%d, %d=%d+%d+%d\n",
+				x, 
+				v1[x], 
+				v1[x - 1] + s1[x],   
+				v1[x - 1],s1[x],
+				v0[x - 1] + t0[x - 1] + s1[x],
+				v0[x - 1], t0[x - 1] , s1[x]);
+
+
+
 			}
 
 
-			printf("v0[%d] = %d :  %d=%d+%d , %d=%d+%d+%d\n",
-					    x, 
-						v0[x],
-						v0[x - 1] + s0[x], 
-						v0[x - 1], s0[x],
-						v1[x - 1] + t1[x - 1] + s0[x],
-						v1[x - 1], t1[x - 1], s0[x]);
-
-			printf("v1[%d] = %d :  %d=%d+%d, %d=%d+%d+%d\n",
-				        x, 
-						v1[x], 
-						v1[x - 1] + s1[x],   
-						v1[x - 1],s1[x],
-						v0[x - 1] + t0[x - 1] + s1[x],
-						v0[x - 1], t0[x - 1] , s1[x]);
-
+			
 		}
 		
+		//printf("%d %d\n", v0[nodeCount+1], v1[nodeCount+1] );
+		printf("#%d %d\n", T, min( v0[nodeCount+1], v1[nodeCount+1] ));
 		
 	}
 
