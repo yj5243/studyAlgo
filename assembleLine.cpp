@@ -48,7 +48,7 @@ int main()
 		memset(v0, 0, sizeof v0);
 
 		scanf("%d", &nodeCount);
-		scanf("%d %d %d %d", &t1[0], &t0[0], &t0[nodeCount], &t1[nodeCount]);
+		scanf("%d %d %d %d", &s0[0], &s1[0], &s0[nodeCount+1], &s1[nodeCount+1]);
 
 		for (int i = 1; i <= nodeCount; i++) {
 			scanf("%d", &s0[i]);
@@ -65,7 +65,7 @@ int main()
 			scanf("%d", &t1[i]);
 		}
 
-		for (int i = 1; i <= nodeCount; i++) {
+		for (int i = 1; i <= nodeCount + 1; i++) {
 			printf("%d", s0[i]);
 		}
 		printf("\n");
@@ -79,24 +79,50 @@ int main()
 		}
 		printf("\n");
 
-		for (int i = 1; i <= nodeCount; i++) {
+		for (int i = 1; i <= nodeCount + 1; i++) {
 			printf("%d", s1[i]);
 		}
 		printf("\n");
 
-
-		s0[nodeCount + 1] = t0[nodeCount];
-		s1[nodeCount + 1] = t1[nodeCount];
-
+		 
+ 
 		for (int x = 1; x <= (nodeCount+1); x++)
 		{
-			v0[x] = min(v1[x - 1] + t1[x - 1] + s0[x], v0[x-1] + s0[x]);
-			v1[x] = min(v0[x - 1] + t0[x - 1] + s1[x], v1[x-1] + s1[x]);
+			if (x == 1) {
+				v0[x] = s0[x-1] + s0[x];
+				v1[x] = s1[x - 1] + s1[x];
 
-			printf("v0[%d] = %d = %d %d %d\n",x,  v0[x], v1[x - 1], t1[x - 1], s0[x]);
-			printf("v1[%d] = %d = %d %d %d\n",x,  v1[x], v0[x - 1] , t0[x - 1] , s1[x]);
+				//printf("%d %d\n\n\n\n\n", s0[x - 1], s0[x]);
+			}
+			else if (x == nodeCount + 1)
+			{
+				v0[x] = v0[x-1] + s0[x];
+				v1[x] = v1[x - 1] + s0[x];
+			}
+			else {
+				v0[x] = min(v1[x - 1] + t1[x - 1], v0[x - 1]) + s0[x];
+				v1[x] = min(v0[x - 1] + t0[x - 1], v1[x - 1]) + s1[x];
+			}
+
+
+			printf("v0[%d] = %d :  %d=%d+%d , %d=%d+%d+%d\n",
+					    x, 
+						v0[x],
+						v0[x - 1] + s0[x], 
+						v0[x - 1], s0[x],
+						v1[x - 1] + t1[x - 1] + s0[x],
+						v1[x - 1], t1[x - 1], s0[x]);
+
+			printf("v1[%d] = %d :  %d=%d+%d, %d=%d+%d+%d\n",
+				        x, 
+						v1[x], 
+						v1[x - 1] + s1[x],   
+						v1[x - 1],s1[x],
+						v0[x - 1] + t0[x - 1] + s1[x],
+						v0[x - 1], t0[x - 1] , s1[x]);
 
 		}
+		
 		
 	}
 
