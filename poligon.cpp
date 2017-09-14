@@ -30,23 +30,22 @@ int main() {
 
 	for (int T = 1; T <= testCase; T++) {
 		scanf("%d", &lines);
+		//printf("%d\n", lines);
 		for (int line = 1; line <= lines; line++)
 		{
 			scanf("%d %d", &x[line], &y[line]);
-			//printf("%d %d ", x[line], y[line]);
+	//		printf("%d %d\n", x[line], y[line]);
 		} 
+		x[lines + 1] = x[1];
+		y[lines + 1] = y[1];
 
-		for (int i = 1; i < lines; i++) {
-			sum += (x[i] * y[i + 1] ) - abs(x[i + 1] * y[i]);
-			//printf("`%d  %d", abs(x[i] * y[i + 1]), abs(x[i + 1] * y[i]));
-			//printf("[%d]\n", sum);
+		for (int line = 1; line <= lines; line++) {
+			sum += abs(x[line] * y[line + 1] ) - abs(y[line] * x[line+1]);
+//			printf("%d  %d \n", abs(x[line] * y[line + 1]), abs(y[line] * x[line + 1]));
+		//	printf("[%d]\n", sum);
  		}
-		sum += x[lines] * y[1] - x[1] * y[lines];
 
-		//printf("%d - %d ", (x[lines] * y[1]) , (x[1] * y[lines]));
-		//printf("[%d]", sum);
-
-		printf("#%d %0.1f\n ", T, abs((float)sum / 2));
+		printf("#%d %0.1f\n ", T, abs((float)sum) / 2);
 		
 
 
