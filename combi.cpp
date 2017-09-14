@@ -32,15 +32,42 @@ int main()
 	setbuf(stdout, NULL);
 
 	scanf("%d", &testCase);
+	for (int row = 1; row <= 5001; row++)
+	{
+		for (int col = 1; col <= 5001; col++)
+		{
+			combi[row][col ] = 0;
+		}
+	}
 
 	
+
 	for (int T = 1; T <= testCase; T++)
 	{
-		scanf("%d %d", &combi[T][1], &combi[T][2]);
-		printf("%d %d\n", combi[T][1], combi[T][2]);
+		int a, b;
+		combi[0][0] = 1;
+		scanf("%d %d", &a, &b);
+		
+		for (int row = 1; row <= a+1; row++)
+		{
+			for (int col = 1; col <= 5002; col++)
+			{		 
+				combi[row][col] = combi[row - 1][col - 1] + combi[row - 1][col];
+				if (combi[row][col] == 0) {
+					break;
+				}
+				//printf("[ %d ", combi[row][col]);
+			}
+			//printf("\n");
+		}		
+		printf("#%d %d\n", T, combi[a+1][b+1]);
+		//printf("%d \n", factorial(a) / ( factorial(b) * factorial(a - b)));
 
-		int a = factorial(combi[T][1]) / (factorial(combi[T][2]) * factorial(combi[T][1] - combi[T][2]));
-		printf("%d\n", a);
+
+
+	
+
+		
 	}
 
 
