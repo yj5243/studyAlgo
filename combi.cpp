@@ -47,7 +47,7 @@ int main()
 	{
 		for (int col = 1; col <= 5002; col++)
 		{
-			combi[row][col] = combi[row - 1][col - 1] + combi[row - 1][col];
+			combi[row][col] = ( combi[row - 1][col - 1]  + combi[row - 1][col] ) % 1000000007;
 			if (combi[row][col] == 0) {
 				break;
 			}
@@ -61,14 +61,8 @@ int main()
 	{
 		int a, b;
 		scanf("%d %d", &a, &b); 
-	 
-		printf("#%d %d\n", T, combi[a+1][b+1]);
- 
-
-
-	
-
-		
+		printf("#%d %d\n", T, combi[a+1][b+1]  );
+ 		
 	}
 
 
