@@ -1,52 +1,79 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <vector>
 #include <algorithm>
-
+#include <string.h>
+#include <queue>
 
 using namespace std;
 
-typedef struct {
-    vector<int> end;
-    vector<int> visit;
-} NODE;  
 
-vector<NODE> node(10050);
-int nodeCount, lineCount, statNode;
+int node[1005][1002];
+int nodeCount =0, lineCount = 0;
+int startNode = 0;
+int nodeVisit[1005];
 
-void DFS(int start)
+queue <int> q;
+
+
+void dfs(int curNode)
 {
-    for(int i=0; i<(node[start].visit.size()); i++)
-    {   
-        if(node[start].visit[i] != -1 && start != 0 ) {
-            printf("DFS : %d %d\n",start+1, node[start].end[i]);
-            node[start].visit[i] = -1;
-            DFS(node[start].end[i]);
+
+    int i;
+    nodeVisit[curNode] = 1;
+    printf("- %d -",curNode);
+    for( int i=1; i<=nodeCount; i++)
+    {
+        if(node[curNode][i] == 1&& nodeVisit[i] == 0) {
+            dfs(i);
         }
     }
 }
 
-int main()
+void bfs(int curNode)
 {
-    int start, end;
-
-    freopen("1260.txt", "rw", stdin);
-    setbuf(stdout, NULL);
-    
-    scanf("%d %d %d", &nodeCount, &lineCount, &statNode);
+    q.push(curNode);
+    q.push(22);
+    printf("- %d",q.front());
+    q.pop();
+    printf(" - %d",q.front());
+    q.pop();
+    printf(" - %d",q.front());
  
+    q.pop();
+    printf(" - %d",q.front());
+ 
+}
 
-    for( int i=0 ; i<lineCount; i++)
+
+int main() {
+
+    freopen("1260.txt", "r", stdin);
+    setbuf(stdout, NULL);
+
+    scanf("%d %d %d",&nodeCount, &lineCount, &startNode );
+
+    for (int i = 0; i <= nodeCount; i++) nodeVisit[i] = 0;
+   
+    for( int line=1; line<=lineCount; line++)
     {
-        scanf("%d %d",&start, &end);
-        node[(start-1)].end.push_back(end);
-        node[(start-1)].visit.push_back(0);
+        int tempStart = 0, tempEnd=0;
+        scanf("%d %d", &tempStart, &tempEnd);
+        node[tempStart][tempEnd] = 1;
+        node[tempEnd][tempStart] = 1;
+
     }
     
-    printf("DFS\n");
-    DFS((statNode -1));
+    for( int i=1; i<=nodeCount; i++){
+        for( int j=1; j<=nodeCount; j++){
+            printf("%d ", node[i][j]);
+        }
+        printf("\n");
+    }
     
 
-    return 1;
-}
+    dfs(startNode);
+    printf("\n");
+    bfs(startNode);
+
+    return 0;
+} 
