@@ -7,10 +7,10 @@
 using namespace std;
 
 
-int node[1005][1002];
+int node[1005][1005] = { {0,0}, };
 int nodeCount =0, lineCount = 0;
 int startNode = 0;
-int nodeVisit[1005];
+int nodeVisit[1005] = {0,};
 
 queue <int> q;
 
@@ -20,7 +20,7 @@ void dfs(int curNode)
 
     int i;
     nodeVisit[curNode] = 1;
-    printf("- %d -",curNode);
+    printf("%d ",curNode);
     for( int i=1; i<=nodeCount; i++)
     {
         if(node[curNode][i] == 1&& nodeVisit[i] == 0) {
@@ -32,16 +32,24 @@ void dfs(int curNode)
 void bfs(int curNode)
 {
     q.push(curNode);
-    q.push(22);
-    printf("- %d",q.front());
-    q.pop();
-    printf(" - %d",q.front());
-    q.pop();
-    printf(" - %d",q.front());
- 
-    q.pop();
-    printf(" - %d",q.front());
- 
+    if(nodeVisit[curNode] == 0)
+    {
+        printf("%d ",curNode);
+        nodeVisit[curNode] = 1;
+    }
+    while(q.empty() == false) {
+
+        int t = q.front();
+        q.pop();
+        for( int i = 1; i<=nodeCount; i++)
+        {
+            if(node[t][i] == 1 && nodeVisit[i] == 0) {
+                q.push(i);
+                printf("%d ", i);
+                nodeVisit[i] = 1;
+            }
+        }
+    }
 }
 
 
@@ -63,16 +71,17 @@ int main() {
 
     }
     
-    for( int i=1; i<=nodeCount; i++){
-        for( int j=1; j<=nodeCount; j++){
-            printf("%d ", node[i][j]);
-        }
-        printf("\n");
-    }
+    // for( int i=1; i<=nodeCount; i++){
+    //     for( int j=1; j<=nodeCount; j++){
+    //         printf("%d ", node[i][j]);
+    //     }
+    //     printf("\n");
+    // }
     
 
     dfs(startNode);
     printf("\n");
+    for (int i = 0; i <= nodeCount; i++) nodeVisit[i] = 0;
     bfs(startNode);
 
     return 0;
